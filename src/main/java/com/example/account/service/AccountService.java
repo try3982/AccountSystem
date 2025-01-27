@@ -2,6 +2,7 @@ package com.example.account.service;
 
 import com.example.account.domain.Account;
 import com.example.account.domain.AccountUser;
+import com.example.account.dto.AccountDto;
 import com.example.account.exception.AccountException;
 import com.example.account.repository.AccountRepository;
 import com.example.account.repository.AccountUserRepository;
@@ -25,7 +26,7 @@ public class AccountService {
      * 계좌를 저장하고, 그 정보를 넘긴다.
      */
     @Transactional
-    public Account createAccount(Long userId, Long initialBalance) {
+    public AccountDto createAccount(Long userId, Long initialBalance) {
         AccountUser accountUser = accountUserRepository.findById(userId)
                 .orElseThrow(() -> new AccountException(ErrorCode.USER_NOT_FOUND));
         //가장 최근에 생성되 account를 가져오고 그 account에서 accountNumber를 받아서 문자를 숫자로 변환하고 다시 문자열로 바꿔준다.
@@ -35,16 +36,17 @@ public class AccountService {
                 .orElse("1000000000");
 
         //신규 계좌 저장
-        Account savedAccount  = accountRepository.save(
-                Account.builder()
-                        .accountUser(accountUser)
-                        .accountStatus(AccountStatus.IN_USE)
-                        .accountNumber(newAccountNumber)
-                        .balance(initialBalance)
-                        .registeredAt(LocalDateTime.now())
-                        .build()
-        );
-        return savedAccount;
+
+       return AccountDto.fromEntity(
+               accountRepository.save(Account.builder()
+                       .accountUser(accountUser)
+                       .accountStatus(AccountStatus.IN_USE)
+                       .accountNumber(newAccountNumber)
+                       .balance(initialBalance)
+                       .registeredAt(LocalDateTime.now())
+                       .build())
+       );
+
 
     }
 

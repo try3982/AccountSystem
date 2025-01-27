@@ -1,5 +1,6 @@
 package com.example.account.dto;
 
+import com.example.account.domain.Account;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,5 +34,13 @@ public class CreateAccount {
         private Long userId;
         private String accountNumber;
         private LocalDateTime registerdAt;
+
+        public static Response from (AccountDto accountDto) {
+            return Response.builder()
+                    .userId(accountDto.getUserId())
+                    .accountNumber(accountDto.getAccountNumber())
+                    .registerdAt(accountDto.getRegisteredAt())
+                    .build();
+        }
     }
 }
