@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class CreateAccount {
@@ -12,7 +15,12 @@ public class CreateAccount {
     @Setter
     //요청
     public static class Requset {
+        @NotNull
+        @Min(1)
         private Long userId;
+
+        @NotNull
+        @Min(100)
         private Long initialBalance;
     }
 
