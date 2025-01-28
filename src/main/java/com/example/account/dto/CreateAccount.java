@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class CreateAccount {
     @Getter
     @Setter
+    @AllArgsConstructor
     //요청
     public static class Requset {
         @NotNull
