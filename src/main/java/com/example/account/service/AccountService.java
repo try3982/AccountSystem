@@ -29,6 +29,8 @@ public class AccountService {
     public AccountDto createAccount(Long userId, Long initialBalance) {
         AccountUser accountUser = accountUserRepository.findById(userId)
                 .orElseThrow(() -> new AccountException(ErrorCode.USER_NOT_FOUND));
+
+        validateCreateAccount(accountUser);
         //가장 최근에 생성되 account를 가져오고 그 account에서 accountNumber를 받아서 문자를 숫자로 변환하고 다시 문자열로 바꿔준다.
         String newAccountNumber = accountRepository.findFirstByOrderByIdDesc()
                 .map(account -> (Integer.parseInt(account.getAccountNumber())) + 1 + " ")
@@ -48,6 +50,12 @@ public class AccountService {
        );
 
 
+    }
+
+    private void validateCreateAccount(AccountUser accountUser) {
+        if(accountRepository.countByAccountUser(accountUser) == 10) {
+            throw new AccountException(ErrorCode.MAX_ACCOUNT_PER_USER_10);
+        }
     }
 
     @Transactional
