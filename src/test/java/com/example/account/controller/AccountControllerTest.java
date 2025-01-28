@@ -52,7 +52,7 @@ class AccountControllerTest {
         mockMvc.perform(post("/account")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(
-                        new CreateAccount.Requset(1L, 100L)
+                        new CreateAccount.Request(1L, 100L)
                 )))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.userId").value(1))
