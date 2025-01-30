@@ -51,11 +51,11 @@ public class TransactionService {
 
     }
 
-    private Transaction saveAndGetTransaction(TransactionResultType transactionResultType, Account account, Long amount) {
+    private Transaction saveAndGetTransaction(TransactionResultType S, Account account, Long amount) {
         return tansactionRepository.save(
                 Transaction.builder()
                         .transactionType(USE)
-                        .transactionResultType(transactionResultType)
+                        .transactionResultType(S)
                         .account(account)
                         .amount(amount)
                         .balanceSnapshot(account.getBalance())
