@@ -1,3 +1,12 @@
+### get account
+GET http://localhost:8080/account?user_id=1
+Accept: application/json
+
+### create account
+POST http://localhost:8080/account
+Content-Type: application/json
+
+
 ### use balance
 POST http://localhost:8080/transaction/use
 Content-Type: application/json
@@ -16,4 +25,6 @@ Content-Type: application/json
   "accountNumber": "1000000001",
   "amount": 10000
 }
+
+
 

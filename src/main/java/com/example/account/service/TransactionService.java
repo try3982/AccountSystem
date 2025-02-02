@@ -58,8 +58,6 @@ public class TransactionService {
                                               TransactionResultType transactionResultType,
                                               Account account,
                                               Long amount) {
-
-
         return tansactionRepository.save(
                 Transaction.builder()
                         .transactionType(transactionType)
@@ -130,6 +128,12 @@ public class TransactionService {
         Account account = accountRepository.findByAccountNumber(accountNumber)
                 .orElseThrow(() -> new AccountException(ErrorCode.ACCOUNT_NOT_FOUND));
         saveAndGetTransaction(CANCEL,F, account, amount);
+    }
+
+    public TransactionDto queryTransactionId(String transactionId) {
+        return TransactionDto.fromEntity( transactionRepository.findByTransactionId(transactionId)
+                .orElseThrow(() -> new AccountException(ErrorCode.TRANSACTION_NOT_FOUND))
+        );
     }
 
 //    private Transaction saveAndGetTransaction(Long amount, Account account) {
